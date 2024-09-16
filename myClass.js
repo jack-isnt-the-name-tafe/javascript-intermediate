@@ -31,13 +31,37 @@ class Member extends Person {
     }
 }
 
+function toUpperName(person) {
+    return person._name.toUpperCase();
+}
+
 // START HERE
-const person1 = new Person("David Hayter", 35, 40, "Solid St", "Sydney", "NSW", 2000);
-const person2 = new Person("John Doe", 67, 13, "Outer St", "Newcastle", "NSW", 2300);
+const membersList = [];
+membersList.push(new Member("David Hayter", 35, 40, "Solid St", "Sydney", "NSW", 2000, 1, new Date(), "Bronze"));
+membersList.push(new Member("John Doe", 67, 13, "Outer St", "Newcastle", "NSW", 2300, 2, new Date(), "Silver"));
+membersList.push(new Member("Veni Overson", 25, 1, "Nowhere St", "Nowhere City", "NSW", 2000, 1, new Date(), "Gold"));
 
-const member1 = new Member("Veni Overson", 25, 1, "Nowhere St", "Nowhere City", "NSW", 2000, 1, new Date(), "Gold");
+membersList.forEach(element => {
+    element.printDetails();
+});
 
-person1.printDetails();
-person2.printDetails();
+const newMembersList = membersList.map(
+    (member) => {
+        return `
+        <div class="member">
+            <div class="id">ID: ${member._memberID}</div>
+            <div class="tier">Membership Tier: ${member._memberTier}</div>
+            <div class="date">Membership Created: ${member._memberDate}</div>
+            <div class="name">Name: ${member._name}</div>
+            <div class="age">Age: ${member._age}</div>
+            <div class="address">Address: ${member._address._no} ${member._address._street}, ${member._address._city} ${member._address._postcode}</div>
+        </div>
+        `;
+    }
+);
 
-member1.printDetails();
+newMembersList.forEach(member => {
+    const ele = document.createElement("div");
+    ele.innerHTML += member;
+    document.getElementById("container").appendChild(ele);
+});
